@@ -1,0 +1,21 @@
+{
+  "change_image": "Change Image of {0}",
+
+  "bg": "Background",
+  "crosshair": "Crosshair",
+  "hand": "Hand",
+  "hotbar": "Hotbar",
+  "hotbar_selection": "Selected Hotbar Slot",
+
+  "language.en": "English",
+  "language.zh-CN": "Chinese (Simplified)",
+
+  "popup.title": "Hud Settings",
+  "popup.language": "Language",
+  "popup.isCreative": "Hide Status and XP Bar",
+  "popup.isHardcore": "Use Hardcore Mode Hearts",
+  "popup.exp.level": "Experience Level",
+  "popup.exp.progress": "Experience Progress",
+  "popup.about.line1": "Not an official Minecraft project, not approved by Mojang AB or Microsoft",
+  "popup.about.line2": "Copyright (c) {0} LateDreamXD"
+}

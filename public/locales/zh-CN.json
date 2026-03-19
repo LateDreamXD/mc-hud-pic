@@ -1,0 +1,21 @@
+{
+  "change_image": "改变 {0} 的图片",
+
+  "bg": "背景",
+  "crosshair": "十字准星",
+  "hand": "手",
+  "hotbar": "快捷栏",
+  "hotbar_selection": "选中的快捷栏",
+
+  "language.en": "英语",
+  "language.zh-CN": "简体中文",
+
+  "popup.title": "Hud 设置",
+  "popup.language": "语言",
+  "popup.isCreative": "隐藏状态和经验条",
+  "popup.isHardcore": "使用极限模式血条",
+  "popup.exp.level": "经验等级",
+  "popup.exp.progress": "经验进度条",
+  "popup.about.line1": "这不是官方的 Minecraft 项目，也未经过 Mojang AB 或 Microsoft 官方授权。",
+  "popup.about.line2": "(c) {0} 晚梦 版权所有"
+}
