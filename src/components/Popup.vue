@@ -40,7 +40,7 @@ const statusItems = [
 	{ key: 'health', icon: 'heart/preview', step: 1, required: ['!isCreative'] },
 	{ key: 'food', icon: 'food_preview', step: 1, required: ['!isCreative'] },
 	{ key: 'air', icon: 'air', step: 1, required: ['!isCreative'] }
-]
+];
 
 </script>
 
@@ -130,6 +130,9 @@ const statusItems = [
 .settings {
 	padding: 8px;
 	min-height: calc(100% - 32px);
+	@media (prefers-color-scheme: light) {
+		color: #000;
+	}
 }
 
 .split {
