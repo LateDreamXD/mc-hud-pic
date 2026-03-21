@@ -2,6 +2,7 @@
 import { defineAsyncComponent, h, reactive, watch, onMounted } from 'vue';
 import { useLateWindowManager } from 'vue-late-window-manager';
 import { useI18n } from 'vue-i18n';
+import { parseProgress } from './utils';
 
 const { t: $t } = useI18n();
 const $lwm = useLateWindowManager();
@@ -68,7 +69,7 @@ const openPopup = () => {
 
 onMounted(() => {
 	document.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape') {
+		if (e.key === 'Escape' || e.key === 'AudioVolumeDown') {
 			if($lwm?.State.windows.some(w => w.id === 'popup'))
 				$lwm?.actions.closeWindow('popup');
 			else
@@ -124,7 +125,7 @@ onMounted(() => {
 			<span v-if="options.exp.level" class="level mc-font">{{ options.exp.level }}</span>
 			<span class="bar">
 				<img v-if="options.exp.progress" class="full pixel" :style="{
-					width: options.exp.progress * 100 + '%'
+					width: parseProgress(options.exp.progress, [0, 1]) * 100 + '%'
 				}" src="/res/hud/experience_bar_progress.png" />
 				<img class="container pixel" src="/res/hud/experience_bar_background.png" />
 			</span>
