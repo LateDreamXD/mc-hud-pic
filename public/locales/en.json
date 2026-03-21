@@ -17,6 +17,13 @@
   "popup.isHardcore": "Use Hardcore Mode Hearts",
   "popup.exp.level": "Experience Level",
   "popup.exp.progress": "Experience Progress",
+  "popup.status.name": "Name",
+  "popup.status.show": "Show",
+  "popup.status.value": "Value",
+  "popup.status.armor": "Armor",
+  "popup.status.health": "Health",
+  "popup.status.food": "Hunger",
+  "popup.status.air": "Air",
   "popup.about.line1": "Not an official Minecraft project, not approved by Mojang AB or Microsoft",
   "popup.about.line2": "Copyright (c) {0} LateDreamXD"
 }

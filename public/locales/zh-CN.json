@@ -16,7 +16,14 @@
   "popup.isCreative": "隐藏状态和经验条",
   "popup.isHardcore": "使用极限模式血条",
   "popup.exp.level": "经验等级",
-  "popup.exp.progress": "经验进度条",
+  "popup.exp.progress": "经验条进度",
+  "popup.status.name": "名称",
+  "popup.status.show": "显示",
+  "popup.status.value": "数值",
+  "popup.status.armor": "护甲值",
+  "popup.status.health": "生命值",
+  "popup.status.food": "饥饿值",
+  "popup.status.air": "氧气值",
   "popup.about.line1": "这不是官方的 Minecraft 项目，也未经过 Mojang AB 或 Microsoft 官方授权。",
   "popup.about.line2": "(c) {0} 晚梦 版权所有"
 }

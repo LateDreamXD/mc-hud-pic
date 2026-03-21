@@ -35,11 +35,18 @@ const expItems = [
 	{ key: 'progress', step: 0.1, scope: [0, 1], required: ['!isCreative'] }
 ];
 
+const statusItems = [
+	{ key: 'armor', icon: 'armor_full', step: 1, required: ['!isCreative'] },
+	{ key: 'health', icon: 'heart/preview', step: 1, required: ['!isCreative'] },
+	{ key: 'food', icon: 'food_preview', step: 1, required: ['!isCreative'] },
+	{ key: 'air', icon: 'air', step: 1, required: ['!isCreative'] }
+]
+
 </script>
 
 <template>
-	<div :class="$style.settings">
-		<label :class="$style['setting-item']">
+	<div class="settings">
+		<label class="setting-item">
 			{{ $t('popup.language') }}
 			<select name="language" v-model="$i18n.locale" @change="loadCurrentLocale">
 				<option v-for="l in supportedLocales" :key="l" :value="l">
@@ -47,39 +54,77 @@ const expItems = [
 				</option>
 			</select>
 		</label>
-		<span :class="$style.split" />
-		<label :class="$style['setting-item']" v-for="s in items" :key="s.key">
-			{{ $t(`popup.${s.key}`) }}
-			<input :name="s.key" type="checkbox" role="switch" :disabled="!checkRequired(s.required)"
-				v-model="options[s.key]" />
+
+		<span class="split" />
+
+		<label class="setting-item" v-for="i in items" :key="i.key">
+			{{ $t(`popup.${i.key}`) }}
+			<input :name="i.key" type="checkbox" role="switch" :disabled="!checkRequired(i.required)"
+				v-model="options[i.key]" />
 		</label>
-		<span :class="$style.split" />
-		<!-- <label>
-			{{ $t('popup.status.health') }}
-			<input type="number" v-model="options.status.health" />
-		</label> -->
-		<label :class="$style['setting-item']" v-for="e in expItems" :key="e.key">
+
+		<span class="split" />
+
+		<label class="setting-item" v-for="e in expItems" :key="e.key">
 			{{ $t(`popup.exp.${e.key}`) }}
 			<input :name="e.key" type="number" :disabled="!checkRequired(e.required)" :step="e.step"
 				:min="e.scope?.[0]" :max="e.scope?.[1]" :style="{ width: '5em' }"
 				v-model="options.exp[e.key]" />
-			</label>
-		<span :class="$style.split" />
-		<div :class="$style.about">
+		</label>
+
+		<span class="split" />
+
+		<table class="setting-table">
+			<thead>
+				<tr>
+					<th>{{ $t('popup.status.name') }}</th>
+					<th>{{ $t('popup.status.show') }}</th>
+					<th>{{ $t('popup.status.value') }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="s in statusItems" :key="s.key">
+					<td>
+						<img class="icon" :src="`/res/hud/${s.icon}.png`"
+							:title="$t(`popup.status.${s.key}`)" />
+						{{ $t(`popup.status.${s.key}`) }}
+					</td>
+					<td>
+						<input :name="`${s.key}-show`" type="checkbox" role="switch"
+							:disabled="!checkRequired(s.required)" v-model="options.status[s.key].show" />
+					</td>
+					<td>
+						<input :name="`${s.key}-current`" type="number"
+							:disabled="!checkRequired(s.required)"
+							:step="s.step" :min="0" :style="{ width: '5em' }"
+							v-model="options.status[s.key].current" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="about">
 			<p>{{ $t('popup.about.line1') }}</p>
 			<p>{{ $t('popup.about.line2', [new Date().getFullYear()]) }}</p>
 
-			<a :class="$style['icon-link']" href="https://github.com/LateDreamXD/mc-hud-pic"
+			<a class="icon-link" href="https://github.com/LateDreamXD/mc-hud-pic"
 				target="_blank" rel="onopener" v-html="siGithub.svg" />
 		</div>
 	</div>
 </template>
 
-<style lang="scss" module>
-.icon-link>svg {
+<style lang="scss" scoped>
+.icon {
+	width: 1rem;
+	height: 1rem;
+	image-rendering: pixelated;
+	-webkit-user-drag: none;
+}
+
+.icon-link>:deep(svg) {
 	fill: currentColor;
-	width: 1em;
-	height: 1em;
+	width: 1rem;
+	height: 1rem;
 }
 
 .settings {
@@ -100,6 +145,18 @@ const expItems = [
 	align-items: center;
 	justify-content: space-between;
 	margin-block: 8px;
+}
+
+.setting-table {
+	width: 100%;
+	border-collapse: collapse;
+	th {
+		padding: 4px 8px;
+	}
+	td {
+		padding: 4px 8px;
+		text-align: center;
+	}
 }
 
 .about {

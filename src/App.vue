@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { defineAsyncComponent, h, reactive, watch, onMounted } from 'vue';
+import { computed, defineAsyncComponent, h, reactive, watch, onMounted } from 'vue';
 import { useLateWindowManager } from 'vue-late-window-manager';
 import { useI18n } from 'vue-i18n';
-import { parseProgress } from './utils';
+import { parseProgress, parsePoint } from './utils';
 
 const { t: $t } = useI18n();
 const $lwm = useLateWindowManager();
@@ -15,7 +15,36 @@ const options = reactive<Options>({
 	exp: {
 		level: 0,
 		progress: 0
+	},
+	status: {
+		armor: {
+			show: false,
+			current: 0,
+			max: 20
+		},
+		health: {
+			show: true,
+			current: 20,
+			max: 20
+		},
+		food: {
+			show: true,
+			current: 20,
+			max: 20
+		},
+		air: {
+			show: false,
+			current: 20,
+			max: 20
+		}
 	}
+});
+
+const status = reactive({
+	armor: computed(() => parsePoint(options.status.armor.current)),
+	health: computed(() => parsePoint(options.status.health.current)),
+	food: computed(() => parsePoint(options.status.food.current)),
+	air: computed(() => parsePoint(options.status.air.current)),
 });
 
 const hotbarStyle = reactive({
@@ -100,24 +129,52 @@ onMounted(() => {
 		width: hotbarStyle.width,
 		bottom: hotbarStyle.height
 	}">
-		<span class="armor"></span>
-		<span class="hearts">
+		<span v-if="options.status.armor.show" class="armor">
 			<span class="full">
-				<img class="pixel" v-for="i in 10" :key="i"
-					:src="`/res/hud/heart/${options.isHardcore ? 'hardcore_full' : 'full'}.png`" />
+				<img v-if="status.armor.full" class="pixel" v-for="i in status.armor.full" :key="i"
+					src="/res/hud/armor_full.png" />
+				<img v-if="status.armor.half" class="pixel" v-for="i in status.armor.half" :key="i"
+					src="/res/hud/armor_half.png" />
 			</span>
 			<span class="container">
-				<img class="pixel" v-for="i in 10" :key="i"
+				<img class="pixel" v-for="i in options.status.armor.max / 2" :key="i"
+					src="/res/hud/armor_empty.png" />
+			</span>
+		</span>
+		<span v-if="options.status.health.show" class="hearts">
+			<span class="full">
+				<img v-if="status.health.full" class="pixel" v-for="i in status.health.full" :key="i"
+					:src="`/res/hud/heart/${options.isHardcore ? 'hardcore_full' : 'full'}.png`" />
+				<img v-if="status.health.half" class="pixel" v-for="i in status.health.half" :key="i"
+					:src="`/res/hud/heart/${options.isHardcore ? 'hardcore_half' : 'half'}.png`" />
+			</span>
+			<span class="container">
+				<img class="pixel" v-for="i in options.status.health.max / 2" :key="i"
 					:src="`/res/hud/heart/${options.isHardcore ? 'container_hardcore' : 'container'}.png`" />
 			</span>
 		</span>
-		<span class="air"></span>
-		<span class="food">
+		<span v-if="options.status.air.show" class="air">
 			<span class="full">
-				<img class="pixel" v-for="i in 10" :key="i" src="/res/hud/food_full.png" />
+				<img v-if="status.air.full" class="pixel" v-for="i in status.air.full" :key="i"
+					src="/res/hud/air.png" />
+				<img v-if="status.air.half" class="pixel" v-for="i in status.air.half" :key="i"
+					src="/res/hud/air_bursting.png" />
+			</span>
+			<span v-if="false" class="container">
+				<img class="pixel" v-for="i in options.status.air.max / 2" :key="i"
+					src="/res/hud/air_empty.png" />
+			</span>
+		</span>
+		<span v-if="options.status.food.show" class="food">
+			<span class="full">
+				<img v-if="status.food.full" class="pixel" v-for="i in status.food.full" :key="i"
+					src="/res/hud/food_full.png" />
+				<img v-if="status.food.half" class="pixel" v-for="i in status.food.half" :key="i"
+					src="/res/hud/food_half.png" />
 			</span>
 			<span class="container">
-				<img class="pixel" v-for="i in 10" :key="i" src="/res/hud/food_empty.png" />
+				<img class="pixel" v-for="i in options.status.food.max / 2" :key="i"
+					src="/res/hud/food_empty.png" />
 			</span>
 		</span>
 
@@ -164,11 +221,6 @@ html {
 	&[lang="en"] {
 		.mc-font {
 			font-size: 10px;
-		}
-	}
-	&[lang="zh-CN"] {
-		.mc-font {
-			font-size: 16px;
 		}
 	}
 }
@@ -258,6 +310,13 @@ span {
 
 	.food {
 		grid-area: food;
+	}
+
+	.air, .food {
+		>* {
+			right: 0;
+			flex-direction: row-reverse;
+		}
 	}
 
 	>*:not(.exp) {
