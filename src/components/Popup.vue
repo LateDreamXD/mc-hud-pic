@@ -31,8 +31,8 @@ const items = [
 ];
 
 const expItems = [
-	{ key: 'level', step: 1, required: ['!isCreative'] },
-	{ key: 'progress', step: 0.1, required: ['!isCreative'] }
+	{ key: 'level', step: 1, scope: [0], required: ['!isCreative'] },
+	{ key: 'progress', step: 0.1, scope: [0, 1], required: ['!isCreative'] }
 ];
 
 </script>
@@ -41,7 +41,7 @@ const expItems = [
 	<div :class="$style.settings">
 		<label :class="$style['setting-item']">
 			{{ $t('popup.language') }}
-			<select v-model="$i18n.locale" @change="loadCurrentLocale">
+			<select name="language" v-model="$i18n.locale" @change="loadCurrentLocale">
 				<option v-for="l in supportedLocales" :key="l" :value="l">
 					{{ $t(`language.${l}`) }}
 				</option>
@@ -50,7 +50,7 @@ const expItems = [
 		<span :class="$style.split" />
 		<label :class="$style['setting-item']" v-for="s in items" :key="s.key">
 			{{ $t(`popup.${s.key}`) }}
-			<input type="checkbox" role="switch" :disabled="!checkRequired(s.required)"
+			<input :name="s.key" type="checkbox" role="switch" :disabled="!checkRequired(s.required)"
 				v-model="options[s.key]" />
 		</label>
 		<span :class="$style.split" />
@@ -60,9 +60,10 @@ const expItems = [
 		</label> -->
 		<label :class="$style['setting-item']" v-for="e in expItems" :key="e.key">
 			{{ $t(`popup.exp.${e.key}`) }}
-			<input type="number" :disabled="!checkRequired(e.required)" :step="e.step"
-				:style="{ width: '5em' }" v-model="options.exp[e.key]" />
-		</label>
+			<input :name="e.key" type="number" :disabled="!checkRequired(e.required)" :step="e.step"
+				:min="e.scope?.[0]" :max="e.scope?.[1]" :style="{ width: '5em' }"
+				v-model="options.exp[e.key]" />
+			</label>
 		<span :class="$style.split" />
 		<div :class="$style.about">
 			<p>{{ $t('popup.about.line1') }}</p>
