@@ -114,6 +114,10 @@ onMounted(() => {
 			@click="changeImage($event.target as HTMLImageElement)" />
 	</div>
 
+	<div class="visual-keys">
+		<button style="left: 8px; top: 8px;" @click="openPopup">Esc</button>
+	</div>
+
 	<span class="crosshair">
 		<img class="pixel" src="/res/hud/crosshair.png" :title="$t('change_image', [$t('crosshair')])"
 			@click="changeImage($event.target as HTMLImageElement)" />
@@ -265,6 +269,33 @@ span {
 
 	>img {
 		object-fit: cover;
+	}
+}
+
+.visual-keys {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+
+	@media screen and (max-width: 768px) {
+		display: block;
+	}
+
+	@media screen and (max-height: 768px) {
+		display: block;
+	}
+
+	button {
+		position: absolute;
+		padding: 1rem;
+		border: 1px solid #fff;
+		border-radius: 6px;
+		color: #fff;
+		background-color: transparent;
+		cursor: pointer;
 	}
 }
 
