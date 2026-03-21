@@ -9,6 +9,7 @@
 
   "language.en": "English",
   "language.zh-CN": "Chinese (Simplified)",
+  "language.zh-TW": "Chinese (Traditional)",
 
   "popup.title": "Hud Settings",
   "popup.language": "Language",

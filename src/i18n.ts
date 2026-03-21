@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { createI18n } from 'vue-i18n';
 
-const supportedLocales = ['en', 'zh-CN'];
+const supportedLocales = ['en', 'zh-CN', 'zh-TW'];
 
 const i18n = createI18n({
 	locale: supportedLocales.includes(navigator.language) ? navigator.language : 'en',
