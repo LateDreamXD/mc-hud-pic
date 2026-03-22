@@ -53,6 +53,10 @@ const hotbarStyle = reactive({
 	left: 'calc(50% - 200px)'
 });
 
+const isTouchable = computed(() => navigator.maxTouchPoints > 0);
+
+console.log(isTouchable.value);
+
 watch(() => hotbarStyle, (newVal) => {
 	hotbarStyle.left = `calc(50% - ${parseInt(newVal.width.replace('px', '')) / 2}px)`;
 });
@@ -114,7 +118,7 @@ onMounted(() => {
 			@click="changeImage($event.target as HTMLImageElement)" />
 	</div>
 
-	<div class="visual-keys">
+	<div v-if="isTouchable" class="visual-keys">
 		<button style="left: 8px; top: 8px;" @click="openPopup">Esc</button>
 	</div>
 
