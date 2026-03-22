@@ -53,7 +53,7 @@ const hotbarStyle = reactive({
 	// left: 'calc(50% - 200px)'
 });
 
-const isTouchable = computed(() => navigator.maxTouchPoints > 0);
+const isTouchable = computed(() => 'ontouchend' in document.documentElement);
 
 const changeImage = (target: HTMLImageElement, url?: string) => {
 	if (url) {
