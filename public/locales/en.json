@@ -12,6 +12,11 @@
   "language.zh-TW": "Chinese (Traditional)",
 
   "popup.title": "Hud Settings",
+  "popup.copy_pic": "Copy Pic",
+  "popup.copy_pic.mobile_device_warning": "Copy Pic may not work on mobile devices, \ndo you still want to try?",
+  "popup.copy_pic.success": "Copy Pic Success!",
+  "popup.copy_pic.fail": "Copy Pic Failed! Reason: \n{0}",
+  "popup.save_pic": "Save Pic",
   "popup.language": "Language",
   "popup.isCreative": "Hide Status and XP Bar",
   "popup.isHardcore": "Use Hardcore Mode Hearts",

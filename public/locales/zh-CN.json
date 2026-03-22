@@ -12,6 +12,11 @@
   "language.zh-TW": "繁体中文",
 
   "popup.title": "Hud 设置",
+  "popup.copy_pic": "复制图片",
+  "popup.copy_pic.mobile_device_warning": "在移动设备上，复制图片可能不会有效，是否继续尝试？",
+  "popup.copy_pic.success": "复制成功！",
+  "popup.copy_pic.fail": "复制失败！原因：\n{0}",
+  "popup.save_pic": "保存图片",
   "popup.language": "语言",
   "popup.isCreative": "隐藏状态和经验条",
   "popup.isHardcore": "使用极限模式血条",

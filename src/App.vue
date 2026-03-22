@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, h, reactive, onMounted } from 'vue';
+import { computed, defineAsyncComponent, h, reactive, onMounted, ref } from 'vue';
 import { useLateWindowManager } from 'vue-late-window-manager';
 import { useI18n } from 'vue-i18n';
-import { parseProgress, parsePoint } from './utils';
+import { parseProgress, parsePoint, copyPic, savePic } from './utils';
 
 const { t: $t } = useI18n();
 const $lwm = useLateWindowManager();
@@ -54,6 +54,7 @@ const hotbarStyle = reactive({
 });
 
 const isTouchable = computed(() => 'ontouchend' in document.documentElement);
+const isHidePopup = ref(false);
 
 const changeImage = (target: HTMLImageElement, url?: string) => {
 	if (url) {
@@ -90,7 +91,30 @@ const openPopup = () => {
 		position: {
 			x: 0,
 			y: 0
-		}
+		},
+		controls: [
+			h('button', {
+				class: 'dream-button icon',
+				title: $t('popup.copy_pic'),
+				onClick: () => {
+					if(isTouchable.value && !confirm($t('popup.copy_pic.mobile_device_warning')))
+						return;
+					isHidePopup.value = true;
+					copyPic().then(
+						() => alert($t('popup.copy_pic.success')),
+						(err) => (alert($t('popup.copy_pic.fail', [err.message])), console.error(err))
+					).finally(() => isHidePopup.value = false);
+				}
+			}, h('img', { class: 'pixel', src: '/res/icons/copy.png' })),
+			h('button', {
+				class: 'dream-button icon',
+				title: $t('popup.save_pic'),
+				onClick: () => {
+					isHidePopup.value = true;
+					savePic().finally(() => isHidePopup.value = false);
+				}
+			}, h('img', { class: 'pixel', src: '/res/icons/image.png' }))
+		]
 	});
 }
 
@@ -207,5 +231,5 @@ onMounted(() => {
 			@click="changeImage($event.target as HTMLImageElement)" />
 	</span>
 
-	<LateWindowManager :custom-class="{ manager: 'mc-font' }" />
+	<LateWindowManager v-show="!isHidePopup" :custom-class="{ manager: 'mc-font' }" />
 </template>

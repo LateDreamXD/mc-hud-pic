@@ -12,6 +12,11 @@
   "language.zh-TW": "繁體中文",
 
   "popup.title": "Hud 選項",
+  "popup.copy_pic": "複製圖片",
+  "popup.copy_pic.mobile_device_warning": "在移動裝置上，複製圖片可能不會有效，是否繼續試試？",
+  "popup.copy_pic.success": "複製成功！",
+  "popup.copy_pic.fail": "複製失敗！原因：\n{0}",
+  "popup.save_pic": "保存圖片",
   "popup.language": "語言",
   "popup.isCreative": "隱藏狀態和經驗條",
   "popup.isHardcore": "使用极限模式血條",
