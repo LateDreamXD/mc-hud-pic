@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, h, reactive, watch, onMounted } from 'vue';
+import { computed, defineAsyncComponent, h, reactive, onMounted } from 'vue';
 import { useLateWindowManager } from 'vue-late-window-manager';
 import { useI18n } from 'vue-i18n';
 import { parseProgress, parsePoint } from './utils';
@@ -50,16 +50,10 @@ const status = reactive({
 const hotbarStyle = reactive({
 	width: '400px',
 	height: '50px',
-	left: 'calc(50% - 200px)'
+	// left: 'calc(50% - 200px)'
 });
 
 const isTouchable = computed(() => navigator.maxTouchPoints > 0);
-
-console.log(isTouchable.value);
-
-watch(() => hotbarStyle, (newVal) => {
-	hotbarStyle.left = `calc(50% - ${parseInt(newVal.width.replace('px', '')) / 2}px)`;
-});
 
 const changeImage = (target: HTMLImageElement, url?: string) => {
 	if (url) {
@@ -133,7 +127,7 @@ onMounted(() => {
 	</span>
 
 	<div v-if="!options.isCreative" class="status" :style="{
-		left: hotbarStyle.left,
+		left: `calc(50% - ${parseInt(hotbarStyle.width.replace('px', '')) / 2}px)`,
 		width: hotbarStyle.width,
 		bottom: hotbarStyle.height
 	}">
@@ -197,13 +191,17 @@ onMounted(() => {
 		</span>
 	</div>
 
-	<span class="hotbar" :style="hotbarStyle">
+	<span class="hotbar" :style="{
+		...hotbarStyle,
+		left: `calc(50% - ${parseInt(hotbarStyle.width.replace('px', '')) / 2}px)`,
+	}">
 		<img class="pixel" src="/res/hud/hotbar.png" :title="$t('change_image', [$t('hotbar')])"
 			@click="changeImage($event.target as HTMLImageElement)" />
 	</span>
 	<span class="hotbar-selection" :style="{
 		...hotbarStyle,
-		width: hotbarStyle.height
+		width: hotbarStyle.height,
+		left: `calc(50% - ${parseInt(hotbarStyle.width.replace('px', '')) / 2}px)`,
 	}">
 		<img class="pixel" src="/res/hud/hotbar_selection.png" :title="$t('change_image', [$t('hotbar_selection')])"
 			@click="changeImage($event.target as HTMLImageElement)" />
